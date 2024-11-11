@@ -9,7 +9,6 @@ Website of API: https://docs.developer.yelp.com/docs/getting-started
 Provide detailed information about restaurants, hotels, attractions, etc., including opening hours, user reviews, ratings, etc.
 Support location query (by city, latitude and longitude, etc.), category filtering (such as restaurants, cafes, attractions, etc.).
 Support for multiple languages and partial international data, which is very useful when developing global applications.
-
 ## 2. Data collection
 ### 2.1 Scenario
 Suppose there are two participants in a role play:
@@ -24,8 +23,7 @@ Fixed expressions and intentions: "What are the interesting places?" "restaurant
 #### Results
 Identify the core functional modules of the application:
 For a travel recommendation app, the core functions might include modules such as "attraction recommendation", "food recommendation", "Accommodation recommendation", etc.
-
-## 3. Implementation (!!!HighLight and Creative Part!!!)
+# 3. Implementation (🚀🚀🚀HighLight and Creative Part🚀🚀🚀)
 ## 4. Sample dialogues
 sys: Hello! You can ask me anything of traveling information!  
 usr: what are the most popular restaurants in gothenburg?  
@@ -87,10 +85,10 @@ Therefore, I turned to another direction like implementing Promise on the functi
 ```
 However, I met a new problem that, the nlg mapping cannot run as normally as before. Since nlg is Promise type of function, but NLGMapping is just a static type, which means it cannot implement asynchronous running between function and function.
 ### 5.3 Solution
-Finally, after a lot of days exploring, coding, testing and debuging, also with figuring out the structure of every coding file in directory, I implement it successfully. I have described the solution with detail in Section 3. Implementation and Section 7. Code. It's a really creative implement explored by myself.  
+Finally, after a lot of days exploring, coding, testing and debuging, also with figuring out the structure of every coding file in directory, I implement it successfully. I have described the solution with detail in **Section 3. Implementation** and **Section 7. Code**. It's a really creative implement explored by myself.  
 
-## 6. Future work (that could improve the system)
-More conversations and more content. Add UI interface to show the returning infomation from API. Make it like a real recommandation application
+## 6. Future work
+More conversations and more content. Add UI interface to show the returning infomation from API. Make it like a real recommandation application. I think it will be lots of creative things that I can do for this application.
 ## 7. Code
 #### 8. collected dialogues, distilled dialogues
 ##### Swedish restaurants
