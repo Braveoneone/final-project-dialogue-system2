@@ -71,7 +71,7 @@ async function fetchData() {
 // Periodically call fetchAndUpdateMapping to update nlgMapping data
 setInterval(fetchAndUpdateMapping, 6000); // Update every 6 seconds
 ```
-With these async functions, it can be avaliable to update nlgMapping data. Especially for the last row, *setInterval* function, I set to update nlgMapping data every 6 seconds for getting the API data in time. Everything will get back without undefined or null because I used the await declaration to wait for finishing of JSON data.
+With these async functions, it can be avaliable to update nlgMapping data. Especially for the last row, *setInterval* function, I set to update nlgMapping data every 6 seconds for getting the API data in time. Everything will get back without undefined or null because I used the await qualifier to wait for finishing of JSON data.
 ```
 async function getData() {
   var res= await getTopSwedishRestaurants("Gothenburg");
