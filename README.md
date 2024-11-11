@@ -145,10 +145,12 @@ Therefore, I turned to another direction like implementing Promise on the functi
 // }
 ```
 However, I met a new problem that, the nlg mapping cannot run as normally as before. Since nlg is Promise type of function, but NLGMapping is just a static type, which means it cannot implement asynchronous running between function and function.
-### 5.3 Solution
+### 5.3 Third Challenge
+How to design the data structure of API data? Firstly, I observed the data string from Yelp API on developer tool in Chrome. Then, I selected some of important key like name, rating, address, and so on of restaurants. Since some data string like location is combined from two or more data, I design the nested data structures for such data.
+### 5.4 Solution
 Finally, after a lot of days exploring, coding, testing and debuging, also with figuring out the structure of every coding file in directory, I implement it successfully. I have described the solution with detail in **Section 3. Implementation** and **Section 7. Code**. It's a really creative implement explored by myself.  
 ## 6. Future work
-More conversations and more content. Add UI interface to show the returning infomation from API. Make it like a real recommandation application. I think it will be lots of creative things that I can do for this application.
+More conversations and more content. Add UI interface to show the returning infomation from API. Make it like a real recommandation application. I think it will be lots of creative things that I can do for this application. Also, spending so many days on the implement of technique, I have no time for richer design and deeper exploration for Yelp API. Also, it is the free trail version so this API can only return 3 data strings at most.
 ## 7. Code
 *structyelp.ts* is a script designed for storing API returing data according to its format.
 ```
