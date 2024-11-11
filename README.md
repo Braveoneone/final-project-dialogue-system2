@@ -1,9 +1,6 @@
 # Report Yiyi Wang
 ## 1. Introduction
-Interface to API application
-Information State Update (ISU)
-Develop a travel recommendation application whose main function is to recommend tourist restaurants, activities, etc. 
-Use a travel information API, such as the TripAdvisor API or Yelp API, to get details, reviews, locations, and so on about individual restaurants.
+I implement the Interface to API application basing on Lab 1 coding project. The main purpose is to develop a travel recommendation application whose main function is to recommend tourist restaurants, activities, etc. I use a travel information API, such as the TripAdvisor API or Yelp API, to get details, reviews, locations, and so on about individual restaurants. Since it is so challenge to implement in technical perspective, I spent several days to explore and implement it successfully. Therefore, this project is more technical implement than a few conversations flow designing.
 ### Yelp Fusion API
 Website of API: *https://docs.developer.yelp.com/docs/getting-started* 
 Provide detailed information about restaurants, hotels, attractions, etc., including opening hours, user reviews, ratings, etc.
@@ -24,8 +21,70 @@ Fixed expressions and intentions: "What are the interesting places?" "restaurant
 Identify the core functional modules of the application:
 For a travel recommendation app, the core functions might include modules such as "attraction recommendation", "food recommendation", "Accommodation recommendation", etc.
 # 3. Implementation (🚀🚀🚀HighLight and Creative Part🚀🚀🚀)
-For solving the creative problem of how to implement API in ISU basing on the Lab 1 coding project, I think the key challenge is how to update nlg dynamically. For dynamically updating, I changed the type of NLGMapping from a simple [Move, string] type to Map<Move, string> type.
-
+For solving the creative problem of how to implement API in ISU basing on the Lab 1 coding project, I think the key challenge is how to update nlg dynamically. For dynamically updating, I changed the type of NLGMapping from a simple [Move, string] type to Map<Move, string> type. Also, the nlgMapping should be flexible to update instead of const one. Thus, this is only the initial part of nlgMapping. With the following code block, I make it avalible for starting greeting and question conversation for ISU which do not need API update.
+```
+var nlgMapping: NLGMapping = new Map([
+  [{ type: "greet", content: null }, "Hello! You can ask me anything of traveling information!"],
+  [{ type: "ask", content: WHQ("kind_res") }, "Which category of restaurant?"],
+  [{ type: "sorry", content: null }, "Sorry, I don’t understand."],
+  [
+    {
+      type: "answer",
+      content: { predicate: "popular_restaurants", argument: "Swedish" },
+    },
+    `${console.log("INITIAL")}`
+  ],
+]);
+```
+Then I wrote a serious of functions for real time updating of nlgMapping. Since for Map type, we can use Map.set to update key and value of nlgMapping.
+```
+// Define a function to update nlgmapping for real-time update calls
+function updateNLGMapping(key:any, newResponse: any) {
+  nlgMapping.set(key, newResponse);
+  console.log(`NLGMapping updated: ${JSON.stringify(key)} -> ${newResponse}`);
+}
+// Accessing data from API and update nlgmapping
+async function fetchAndUpdateMapping() {
+  const data = await fetchData();
+  for (const item of data) {
+    const { key, response } = item;
+    updateNLGMapping(key, response);  // update mapping
+  }
+}
+// Gets the fetchData function from API
+async function fetchData() {
+  return [
+    { 
+      key: {
+        type: "answer",
+        content: { predicate: "popular_restaurants", argument: "Swedish" },
+      },
+      response: `The most two popular Swedish restaurants are ${name_1} and ${name_2}.
+       Firstly for the restaurant ${name_1}, its address is at ${res_1.location.address1} ${res_1.location.city}
+       And its rating is ${res_1.rating}. and its flavour category is ${res_1.categories.map(category => category.title).join(", ")}
+       For the second restaurant${name_2}, its address is at ${res_2.location.address1} ${res_2.location.city}
+       And its rating is ${res_2.rating}. and its flavour category is ${res_2.categories.map(category => category.title).join(", ")} ` 
+    },
+    ...
+  ];
+}
+// Periodically call fetchAndUpdateMapping to update nlgMapping data
+setInterval(fetchAndUpdateMapping, 6000); // Update every 6 seconds
+```
+With these async functions, it can be avaliable to update nlgMapping data. Especially for the last row, *setInterval* function, I set to update nlgMapping data every 6 seconds for getting the API data in time. Everything will get back without undefined or null because I used the await declaration to wait for finishing of JSON data.
+```
+async function getData() {
+  var res= await getTopSwedishRestaurants("Gothenburg");
+  if (res && res.length > 0) {
+      res_1 = res[0];
+      res_2 = res[1];
+  } else {
+      console.log("No data");
+  }
+}
+getData();
+```
+Therefore, at the beginning of application, *getTopSwedishRestaurants* starts to get API data and update function would wait for *getTopSwedishRestaurants* to be finished and make every variable assignment. Then with the interface design in **Section 7. Code**, we can access the data following the data struction like res_1.rating for the rate score of the first restaurant, res_2.location.address1 for the restaurant address for the second restaurant and so on.
 ## 4. Sample dialogues
 sys: Hello! You can ask me anything of traveling information!  
 usr: what are the most popular restaurants in gothenburg?  
@@ -171,7 +230,7 @@ interface Region {
 }
 
 ```
-*fetchyelp.ts* is the script for getting raw json data from remote API by GET method. Its main part is an export async *getTopNationRestaurants* function in which *city* name is an input parameter and *Promise<Business[]>* as a return.
+*fetchyelp.ts* is the script for getting raw json data from remote API by GET method. Its main part is an export async *getTopNationRestaurants* function in which *city* name is an input parameter and *Promise<Business[]>* as a return. As for how to write the request url, as we can see from the code, I write the location, categories, limit and sort_by method of rating in API request url.
 ```
 // Yelp API Key
 const API_KEY = "lZZgHuBl_udnkqGwQvIZGfzaItFdMyHbe-gMb2ysImc9VXgl55Njo_bkmRiBrLW0CHj3uLoZxH7lVU2_kcG04rV8VWazltgxEN2TiLyC4lU5CdYxaQ11hfvAcg4pZ3Yx";
