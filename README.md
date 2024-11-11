@@ -16,8 +16,7 @@ Suppose there are two participants in a role play:
 Participant A: Acted as an application to provide travel recommendation services.
 Participant B: Play the role of a user who wants to find an attraction suitable for a weekend trip.
 #### Scene setting
-User B recently had a few days of vacation and wanted to relax in a place not far from his city. He was not sure where to go. Users want detailed recommendations of attractions, including interesting places to go, good places to eat, accommodation suggestions, etc. Users may also mention personal needs, such as "I like the quiet environment" or "I want to try the local cuisine."
-
+User B recently had a few days of vacation and wanted to relax in a place not far from his city. He was not sure where to go. Users want detailed recommendations of attractions, including interesting places to go, good places to eat, accommodation suggestions, etc. Users may also mention personal needs, such as "I like the quiet environment" or "I want to try the local cuisine."  
 ### 2.2 Distillation and analysis results
 Common needs of users: Users may repeatedly ask for "scenic spot recommendations", "food recommendations", "accommodation recommendations", etc.
 Structure of dialogue: Users often start by asking a general question and then go deeper, possibly personalizing their recommendations.
@@ -39,8 +38,8 @@ sys: The most two popular Swedish restaurants are Sandberg Månsson and Smaka.
        And its rating is 4.4. and its flavour category is Bars, Swedish.  
 ## 5. Discussion 
 ### 5.1 First Challenge
-I have spent a long time to implement a real-time interaction between ISU, NLUG and API application. Also, I met many problem, for example, firstly, I realized the Promise method in 'isu.ts' like Lab 2:  
-'''
+I have spent a long time to implement a real-time interaction between ISU, NLUG and API application. Also, I met many problem, for example, firstly, I realized the Promise method in 'isu.ts' like Lab 2:    
+```
 actors: {
     dme: dme,
     get_api_data: fromPromise<any, null>(async () => { // Just another expolration but didn't work
@@ -55,11 +54,11 @@ speak_next_moves: ({ context, event }) =>
           utterance: nlg((event as NextMovesEvent).value), //input parameter for nlg
         },
       }),
-'''  
+```
 I want to pass the API data by nlg function but it didn't work because I figure out that, when this application start to run, the nlgMapping would be initialized immediately. However, as we know, it will take a few time to POST and GET from remote API. So this is a real technical challenge for me to find another way if I want to implement API basing on our Lab 1 coding.
 ### 5.2 Second Challenge
 Therefore, I turned to another direction like implementing Promise on the function nlg and nlu in nlug.ts.
-'''
+```
 // export async function nlg(moves: Move[]): Promise<string> {
 //   console.log("generating moves", moves);
 //   async function generateMove(move: Move): Promise<string> {
@@ -85,7 +84,7 @@ Therefore, I turned to another direction like implementing Promise on the functi
 //   console.log("generated utterance:", utterance);
 //   return utterance;
 // }
-'''  
+```
 However, I met a new problem that, the nlg mapping cannot run as normally as before. Since nlg is Promise type of function, but NLGMapping is just a static type, which means it cannot implement asynchronous running between function and function.
 ### 5.3 Solution
 Finally, after a lot of days exploring, coding, testing and debuging, also with figuring out the structure of every coding file in directory, I implement it successfully. I have described the solution with detail in Section 3. Implementation and Section 7. Code. It's a really creative implement explored by myself.  
