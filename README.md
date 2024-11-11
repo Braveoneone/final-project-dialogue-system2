@@ -171,7 +171,7 @@ interface Region {
 }
 
 ```
-fetchyelp.ts is the script for getting raw json data from remote API by posting. Its main part is an export async *getTopNationRestaurants* function in which city name is an input parameter and Promise<Business[]> as a return.
+*fetchyelp.ts* is the script for getting raw json data from remote API by GET method. Its main part is an export async *getTopNationRestaurants* function in which *city* name is an input parameter and *Promise<Business[]>* as a return.
 ```
 // Yelp API Key
 const API_KEY = "lZZgHuBl_udnkqGwQvIZGfzaItFdMyHbe-gMb2ysImc9VXgl55Njo_bkmRiBrLW0CHj3uLoZxH7lVU2_kcG04rV8VWazltgxEN2TiLyC4lU5CdYxaQ11hfvAcg4pZ3Yx";
